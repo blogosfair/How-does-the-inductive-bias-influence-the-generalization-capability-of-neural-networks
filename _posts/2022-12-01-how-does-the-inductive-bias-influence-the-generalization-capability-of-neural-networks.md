@@ -99,17 +99,15 @@ It decomposes the test data point x into orthogonal components that are parallel
 
 This can be confirmed by visualizing the results of the 1-layer FCN:
 
+{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
 
-
-{% include path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
 
 
 This means the inductive bias does neither lead to good generalization nor to memorization. The predictions become more and more random the more unlike the test data point is to the training data.
 
 Deeper networks tend to learn the constant funtion, so there is a strong inductive bias towards the training output regardless of the specific input. This behaviour is similar to a deep ReLU network which can be seen in the figure that compares the deep FCN and deep ReLU network.
 
-
-{% include path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
 
 
 Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that the more complex the network architecture is, it is more prone to memorization. This can be seen in line with the statistical learning theory as a more complex architecture means more parameters and therefore, more overparametrization.
