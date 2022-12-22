@@ -87,15 +87,13 @@ So let's look at some of the results:
 ### Fully connected networks (FCN)
 
 
-
-
 The figure shows that for fully connected networks the outputs differ depending on the depth of the network as well as the type of testing data.
 Shallower networks seem to integrate random white noise to the output.
 The simmilarity of the test data to the training example also influences the behaviour of the model. On test data from the MNIST digit sets, all network architectures perform quite well. For a similar data point the output tends to be similar to the training output whereas, for more different data points the white noise dominates the output. The authors underline this finding with a *theorem*, proven for 1-layer FCNs. 
 
-$$\begin{equation}
+$$
     f(x) = \Pi(x) + R \Pi(x)
-    \end{equation}$$
+$$
 
 It decomposes the test data point x into orthogonal components that are parallel and perpendicular to the training example $\hat{x}$. This can be looked at as a measure to identify the similarity to $\hat{x}$. R is a random matrix. Whichever part of x dominates, determines if the output is more similar to the training output or includes random white noise. 
 
@@ -103,7 +101,7 @@ This can be confirmed by visualizing the results of the 1-layer FCN:
 
 
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
+{% include path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
 
 
 This means the inductive bias does neither lead to good generalization nor to memorization. The predictions become more and more random the more unlike the test data point is to the training data.
@@ -111,7 +109,7 @@ This means the inductive bias does neither lead to good generalization nor to me
 Deeper networks tend to learn the constant funtion, so there is a strong inductive bias towards the training output regardless of the specific input. This behaviour is similar to a deep ReLU network which can be seen in the figure that compares the deep FCN and deep ReLU network.
 
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
+{% include path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
 
 
 Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that the more complex the network architecture is, it is more prone to memorization. This can be seen in line with the statistical learning theory as a more complex architecture means more parameters and therefore, more overparametrization.
