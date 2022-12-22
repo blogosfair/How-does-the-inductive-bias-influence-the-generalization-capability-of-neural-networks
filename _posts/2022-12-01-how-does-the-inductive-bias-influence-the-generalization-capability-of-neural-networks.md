@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: [How does the inductive bias influence the generalization capability of neural networks?]
+title: How does the inductive bias influence the generalization capability of neural networks?
 description: [Your blog's abstract - a short description of what your blog is about]
 date: 2022-12-01
 htmlwidgets: true
