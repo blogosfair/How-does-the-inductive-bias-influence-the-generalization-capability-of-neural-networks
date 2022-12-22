@@ -122,7 +122,6 @@ The first figure chosen the button 'CNN' shows the resulting visualizations. It 
 
 The evolution of the output can be better understood when looking at the status of the prediction in the hidden layers of the CNN. Since CNNs - unlike FCNs - preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. In the figure below the respective results are shown for a randomly initialized 20-layer CNN compared to different depths of trained CNNs.
 
-{% include 2022-05-03-submission-barth/CNNs_intermedLayers.html %}
 
 
 <div class="l-page">
