@@ -41,21 +41,19 @@ toc:
   - name: Conclusion
 ---
 
-Deep neural networks have long become the golden standard for machine learning and are applied to many different use cases. Their ability to generalize from training data is widly used but not well understood.
-This blogposts gives deeper insights on the theoretical question why neural networks generalize, more concretely, how inductive biases influence the generalization capability of neural networks. It therefore, analyses the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, gives some more background on the underlying paradox and explains the paper's experiments and findings. It also shows how practitioners can benefit from the theoretical findings and how those can be used when designing new models.
+
+Deep neural networks are a commonly used machine learning technique that have proven to be effective for many different use cases. However, their ability to generalize from training data is not well understood. In this blog post, we will explore the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, which aims to shed light on the question of why neural networks are able to generalize, and how inductive biases influence their generalization capabilities.
+
 
 ## Overfitting Puzzle
 
-Neural networks are widly used in machine learning and it is commonly accepted that they outperform most other models. The reasons why these networks perform so well, however, are not well understood. One open question is the **overfitting puzzle**.
-It describes the paradox where neural networks contradict the statistical learning theory.
+One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts classical learning theory, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data.
 
-**Statistical learning theory** says that a model should not have more parameters than data (overparametrization) as this leads to a model that is not able to predict well on new unseen data (generalization). During training such an overparametrized model can simply memorize the training data and therefore, performs well on those (overfitting).
-Neural networks however (especially deep networks) are typically used in the overparametrized case, where the number of parameters exceed training examples. In this regime several common generalization bounds do not apply <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>..
+Neural networks, particularly deep networks, are typically used in the overparameterized regime, where the number of parameters exceeds the number of training examples. In this case, common generalization bounds do not apply <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. According to classical learning theory, the generalization behavior of a learning system should depend on the number of training examples (n), and the complexity of the model should be balanced with its fit to the data <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. However, neural networks have shown that this is not always the case, as they can perform well even in cases of extreme overparameterization (e.g., a 5-layer CNN with 80 million parameters <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>).
 
-In classical learning theory the generalization behavior of a learning system depends on the number of training data n. From this point of view deep learning networks behave as expected: the more training data, the smaller the test error.
-A trade-off between the complexity of a model and its fit to the data is assumed <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. The complexity of neural networks is often measured by the number of parameters.
-However, neural networks have proved this wrong. Even in cases of extreme overparametrization (e.g. a 5-layer CNN may have 80 million parameters <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> these networks perform well on unseen data/ are able to generalize. Although this behavior of neural networks is widly used in machine learning, the underlying reasons are still not well understood.
-Zhang et al.'s paper aims to get a deeper understanding of this phenomenon. It more specifically, analyses the role of the **inductive bias**. The inductive bias or learning bias results from assumptions a network makes about the nature of the target function and is structural. Therefore, it highly depends on the architecture of a neural network. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> make several experiments with different types of fully connencted networks (FCN) as well as convolutional neural networks (CNN) to find out which biases apply for these network architectures.
+To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> examined the role of inductive bias in neural networks. Inductive bias, or learning bias, refers to the assumptions a network makes about the nature of the target function, and is determined by the network's architecture. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted experiments with different types of fully connected networks (FCN) and convolutional neural networks (CNN) to investigate which biases are effective for these network architectures.
+
+
 
 ## Experiments
 <!--- 
@@ -68,13 +66,14 @@ Vllt noch Figure 4 erklären
 Bilder reduzieren auf Wichtiges!
 --->
 
-The paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> uses **empirical studies** to get a deeper understanding of the theoretical "overfitting puzzle" and how the inductive bias influences this behaviour of overparametrized neural networks. The authors want to reveal the inductive bias under **different architectural choices** and therefore, compare fully connected and convolutional neural networks. The task is to learn an identity map through a single data point. Only using one data point for training is an artificial setup that shows the extremest case of overparametrization.
-The goal of their study is to determine if a network tends towards memorization (learning a constant function) or generalization (learning the identity function).
+In the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, the authors use **empirical studies** to better understand the "overfitting puzzle" and how inductive bias affects the behavior of overparameterized neural networks. The authors specifically aim to investigate the role of inductive bias under **different architectural choices** by comparing fully connected and convolutional neural networks.
 
-Let's have a deeper look at the **identity task**. This training objective should return the input itself as ouput which means there is a structural regularity between input and output <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite>. This allows for rich visualization and easy evaluation via correlation or MSE.
-For linear models allowing for the identity task can be done by ensuring that hidden dimensions are not smaller than the input and by setting the weights to the identity matrix in every layer. For the convolutional layer only the center of the kernel is used and all other values are set to zero. It therefore, simulates a 1 x 1 convolution which functions as a local identity function. For deeper models that use [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) as activation function it has to be considered that all negative values are discarded. This means, these values need to be encoded and recovered after ReLU which can be achieved by using hidden dimensions twice the input size. Negative and positive values are stored seperately and are then, reconstructed.
+The task used in the study is to learn an identity map through a single data point, which is an artificial setup that demonstrates the most extreme case of overparameterization. The goal of the study is to determine whether a network tends towards memorization (learning a constant function) or generalization (learning the identity function).
 
-The experience setup uses the 60k **[MNIST digit data set](http://yann.lecun.com/exdb/mnist/)**. One of these digits is used as the training example whereas the network's are tested on different kind of data: a linear combination of two digits, random digits from MNIST test set, random images from Fashion MNIST, and some algorithmically generated image patterns.
+To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the ReLU activation function, it is necessary to encode and recover negative values, as they are discarded by the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
+
+The study uses the 60k **[MNIST dataset](http://yann.lecun.com/exdb/mnist/)** and tests the networks on various types of data, including a linear combination of two digits, random digits from the MNIST test set, random images from the Fashion MNIST dataset, and algorithmically generated image patterns. 
+
 
 So let's look at some of the results:
 
@@ -86,6 +85,9 @@ So let's look at some of the results:
 
 
 ### Fully connected networks (FCN)
+
+
+
 
 The figure shows that for fully connected networks the outputs differ depending on the depth of the network as well as the type of testing data.
 Shallower networks seem to integrate random white noise to the output.
