@@ -3,7 +3,28 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body {font-family: Arial; margin-left: 184px;}
+body {
+    font-family: Arial; 
+    margin-left: 184px; 
+    margin-right: 184px;
+}
+
+
+
+/* responsive, form small screens, use 13px font size */
+@media (max-width: 1179px) {
+    body {
+    margin-left: 130px; 
+    margin-right: 130px;
+    }
+}
+
+@media (max-width: 999px) {
+    body {
+    margin-left: 0px; 
+    margin-right: 0px;
+    }
+}
 
 /* Style the tab */
 .tab {
@@ -37,7 +58,6 @@ body {font-family: Arial; margin-left: 184px;}
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 6px 12px;
   border: none;
 }
 </style>
