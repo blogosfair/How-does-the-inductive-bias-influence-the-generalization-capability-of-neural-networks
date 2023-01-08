@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: How does the inductive bias influence the generalization capability of neural networks?
-description: The paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] explores the generalization capabilities of deep neural networks and how inductive biases influence them.
+description: test
 date: 2022-12-01
 htmlwidgets: true
 
