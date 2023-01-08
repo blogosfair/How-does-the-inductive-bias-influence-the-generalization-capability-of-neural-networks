@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: How does the inductive bias influence the generalization capability of neural networks?
-description: test
+description: The blog post discusses how memorization and generalization are affected by extreme overparameterization.
 date: 2022-12-01
 htmlwidgets: true
 
@@ -66,16 +66,16 @@ Vllt noch Figure 4 erklären
 Bilder reduzieren auf Wichtiges!
 --->
 
-In the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, the authors use **empirical studies** to better understand the "overfitting puzzle" and how inductive bias affects the behavior of overparameterized neural networks. The authors specifically aim to investigate the role of inductive bias under **different architectural choices** by comparing fully connected and convolutional neural networks.
+In the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, the authors use **empirical studies** to better understand the *overfitting puzzle* and how inductive bias affects the behavior of overparameterized neural networks. The authors specifically aim to investigate the role of inductive bias under **different architectural choices** by comparing fully connected and convolutional neural networks.
 
 The task used in the study is to learn an identity map through a single data point, which is an artificial setup that demonstrates the most extreme case of overparameterization. The goal of the study is to determine whether a network tends towards memorization (learning a constant function) or generalization (learning the identity function).
 
-To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the ReLU activation function, it is necessary to encode and recover negative values, as they are discarded by the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
+To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) activation function, it is necessary to encode and recover negative values, as they are discarded by the ReLU function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
 
-The study uses the 60k **[MNIST dataset](http://yann.lecun.com/exdb/mnist/)** and tests the networks on various types of data, including a linear combination of two digits, random digits from the MNIST test set, random images from the Fashion MNIST dataset, and algorithmically generated image patterns. 
+The study uses the **[MNIST dataset](https://paperswithcode.com/dataset/mnist)** and tests the networks on various types of data, including a linear combination of two digits, random digits from the MNIST test set, random images from the Fashion MNIST dataset, and algorithmically generated image patterns. 
 
 
-So let's look at some of the results:
+So let us look at some of the results:
 
 
 <div class="l-page">
