@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: How does the inductive bias influence the generalization capability of neural networks?
-description: [Your blog's abstract - a short description of what your blog is about]
+description: The paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] explores the generalization capabilities of deep neural networks and how inductive biases influence them.
 date: 2022-12-01
 htmlwidgets: true
 
@@ -87,38 +87,42 @@ So let's look at some of the results:
 ### Fully connected networks (FCN)
 
 
-The figure shows that for fully connected networks the outputs differ depending on the depth of the network as well as the type of testing data.
-Shallower networks seem to integrate random white noise to the output.
-The simmilarity of the test data to the training example also influences the behaviour of the model. On test data from the MNIST digit sets, all network architectures perform quite well. For a similar data point the output tends to be similar to the training output whereas, for more different data points the white noise dominates the output. The authors underline this finding with a *theorem*, proven for 1-layer FCNs. 
+The figure above shows that for fully connected networks, the outputs differ depending on the depth of the network and the type of testing data. 
+Shallower networks seem to incorporate random white noise into the output, while deeper networks tend to learn the constant function. The similarity of the test data to the training example also affects the behavior of the model. When the test data is from the MNIST digit sets, all network architectures perform quite well. However, for test data that is more dissimilar to the training data, the output tends to include more random white noise. The authors prove this finding with a *theorem* for 1-layer FCNs, 
+
 
 $$
-    f(x) = \Pi(x) + R \Pi(x)
+    f(x) = \Pi(x) + R \Pi(x),
 $$
 
-It decomposes the test data point x into orthogonal components that are parallel and perpendicular to the training example $\hat{x}$. This can be looked at as a measure to identify the similarity to $\hat{x}$. R is a random matrix. Whichever part of x dominates, determines if the output is more similar to the training output or includes random white noise. 
+which decomposes the test data point $x$ into components that are parallel and perpendicular to the training example. This theorem shows that the output becomes more random as the test data becomes less similar to the training data.
 
-This can be confirmed by visualizing the results of the 1-layer FCN:
+This behavior can be confirmed by visualizing the results of the 1-layer FCN:
 
 {% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
 
+The inductive bias does not lead to either good generalization or memorization. Instead, the predictions become more random as the test data becomes less similar to the training data.
 
-
-This means the inductive bias does neither lead to good generalization nor to memorization. The predictions become more and more random the more unlike the test data point is to the training data.
-
-Deeper networks tend to learn the constant funtion, so there is a strong inductive bias towards the training output regardless of the specific input. This behaviour is similar to a deep ReLU network which can be seen in the figure that compares the deep FCN and deep ReLU network.
+Deeper networks tend to learn the constant function, resulting in a strong inductive bias towards the training output regardless of the specific input. This behavior is similar to that of a deep ReLU network, as shown in the figure comparing deep FCN and deep ReLU networks.
 
 {% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
 
+Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that more complex network architectures are more prone to memorization. This finding aligns with statistical learning theory, as a more complex architecture has more parameters and therefore, more overparameterization.
 
-Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that the more complex the network architecture is, it is more prone to memorization. This can be seen in line with the statistical learning theory as a more complex architecture means more parameters and therefore, more overparametrization.
+
+
 
 ### Convolutional neural networks (CNNs)
 
-For convolutional neural networks the inductive bias was analysed using the ReLU activation function and testing networks with different depths. The hidden layers of the CNN consist of 5 × 5 convolution filters organized as 128 channels. The networks have two constraints to match the structure of the identity target function.
 
-The first figure chosen the button 'CNN' shows the resulting visualizations. It can be seen that for shallow networks the results are quite good, the identity function could be learned. For intermediate depths neither the identity nor the constant function were adapted, the networks function as edge detectors. In contrast, deep networks learn the constant function. Wether the model learns the identity or the constant function, both outcomes reflect inductive biases as no specific structure was been given by the task.
 
-The evolution of the output can be better understood when looking at the status of the prediction in the hidden layers of the CNN. Since CNNs - unlike FCNs - preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. In the figure below the respective results are shown for a randomly initialized 20-layer CNN compared to different depths of trained CNNs.
+
+For convolutional neural networks, the inductive bias was analyzed using the ReLU activation function and testing networks with different depths. The hidden layers of the CNN consist of 5 × 5 convolution filters organized into 128 channels. The networks have two constraints to match the structure of the identity target function.
+
+If you choose the button 'CNN' in the first figure, it shows the resulting visualizations. It can be seen that shallow networks are able to learn the identity function, while intermediate-depth networks function as edge detectors and deep networks learn the constant function. Whether the model learns the identity or the constant function, both outcomes reflect inductive biases since no specific structure was given by the task.
+
+A better understanding of the evolution of the output can be obtained by examining the status of the prediction in the hidden layers of the CNN. Since CNNs, unlike FCNs, preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. The figure below shows the results for a randomly initialized 20-layer CNN compared to different depths of trained CNNs."
+
 
 
 
@@ -128,36 +132,35 @@ The evolution of the output can be better understood when looking at the status 
 
 
 
+Random convolution gradually smooths out the input data, and after around eight layers, the shapes are lost. When the networks are trained, the results differ. The 7-layer CNN performs well and ends up with an identity function of the input images, while the results of the 14-layer CNN are more blurry. For the 20-layer trained CNN, it initially behaves similarly to the randomly initialized CNN by wiping out the input data, but it preserves the shapes for a longer period. In the last three layers, it renders the constant function of the training data and outputs 7 for any input.
 
-Random convolution gradually smooths out the input data and after around eight layers the shapes are lost. It can be seen that training the networks lead to different results. The 7-layer CNN functions quite well and ends up with an identity function of the input images whereas the results of the 14-layer CNN are more blurry. For the 20-layer trained CNN it can be seen that it first behaves similar to the randomly initialized CNN, wiping out the input data, but keeps the shapes a bit longer. In the last three layers it is rendering the constant function of the training data and outputting 7 for whichever input.
+These results align with the findings of Radhakrishnan et al. [2018] <d-cite key="radhakrishnan2019memorization"></d-cite> in 'Memorization in overparametrized autoencoders', which used a similar empirical framework on fully-connected autoencoders. They found that deep neural networks learn locally contractive maps around the training examples, leading to learning the constant function.
 
-These results overlap with the findings of Radhakrishnan et al. [2018] <d-cite key="radhakrishnan2019memorization"></d-cite> in 'Memorization in overparametrized autoencoders'. They use a similar empirical framework on fully-connected autoencoders. Deep neural networks learn locally contractive maps around the training examples which leads to learning the constant function.
+As for FCNs, the experiments show that the similarity of the test data to the training data point increases task success.
+Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted further experiments with different **feature channel numbers and dimensions**. They found that increasing the hidden dimensions/adding channels is much less prone to overfitting than adding depth. This should be considered when designing new models: if the goal is to increase the number of parameters of an existing model (perhaps to improve optimization dynamics or prepare for more training data), it is better to try increasing the hidden dimension before tuning the depth, unless the nature of the data changes.
 
-As for FCNs, the experiments show that the similarity of the test data to the training data point increases the task success.
-
-Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> did further experiments with different **feature channel numbers and dimensions**. Interestingly, they found that increasing the hidden dimensions/ adding channels is way less prune to overfitting than adding depth. This should be taken into account when designing new models: if one is to increase the number of parameters of an existing model (maybe hoping to get smoother optimization dynamics, or to prepare for more training data), it is better to first try to increase the hidden dimension before tuning the depth, unless the nature of the data changes.
-
-Another aspect that influences the inductive bias is **model initialization**. Especially for networks with few channels, the difference between random initialization and the converged network is extreme <d-cite key="DBLP:conf/iclr/FrankleC19"></d-cite>. This can be explained in the following way: in a regime of random initialization with only few channels, the initialization has not enough changeability to even out wrong choices. Therefore, the networks are more likely to converge to non-optimal extrema. Having more channels evens out this problem as more parameters help smooth out 'unlucky' cases.
+Another factor that influences inductive bias is **model initialization++. For networks with few channels, the difference between random initialization and the converged network is extreme <d-cite key="DBLP:conf/iclr/FrankleC19"></d-cite>. This can be explained as follows: in the regime of random initialization with only a few channels, the initialization does not have enough flexibility to compensate for incorrect choices. As a result, the networks are more likely to converge to non-optimal extrema. Having more channels helps to smooth out this problem, as more parameters can compensate for 'unlucky' cases.
 
 ## General findings
 
-The figures show that CNNs have a better generalization capability than FCNs.
-However, it is important to note that the experiments primarily aim to compare different neural networks **within their architecture type** and a comparison between FCNs and CNNs can not be seen as fair. CNNs have natural advantages due to sparser networks and structural biases such as local receptive field and parameter sharing that are consistent with the identity task. Looking at overparametrization CNNs have more parameters. To make this clear: A 6-layer FCN contains 3.6M parameters, a 5-layer CNN (with 5x5 filters of 1024 channels) 78M parameters. These differences are illustrated in the underlying figure.
+The figures below show that CNNs have better generalization capability than FCNs. However, it is important to note that the experiments primarily aim to compare different neural networks **within their architecture type**, so a comparison between FCNs and CNNs cannot be considered fair. CNNs have natural advantages due to sparser networks and structural biases, such as local receptive fields and parameter sharing, that are consistent with the identity task. Additionally, CNNs have more parameters, as seen in the underlying figure: a 6-layer FCN contains 3.6M parameters, while a 5-layer CNN (with 5x5 filters of 1024 channels) has 78M parameters. These differences should be taken into account when evaluating the results of the experiments.
 
 
 {% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Num_param.gif" class="img-fluid" %}
 
-Concluding, CNNs generalize better than FCNs although they have more parameters. This follows the studied phenomenon that neural networks resist the statistical learning theory.
+To conclude, CNNs generalize better than FCNs, even though they have more parameters. This is consistent with the observed phenomenon that neural networks do not follow the statistical learning theory.
 
-The experiments explained previously lead to these main findings of the paper:
-* Parameter counting does not strongly correlate with the generalization performance, but the structural bias of the model does.
+The experiments described above lead to the following main findings of the paper:
 
-For example, being equally overparameterized,
-* training a very deep model without residual connections might be prune to memorization; while 
-* adding more feature channels / dimensions is much less likely to overfit.
+* The number of parameters does not strongly correlate with generalization performance, but the structural bias of the model does.
+
+For example, when equally overparameterized,
+
+* training a very deep model without residual connections is prone to memorization, while
+* adding more feature channels/dimensions is much less likely to cause overfitting.
+
 
 ## Conclusion
+After reading this blog post, we hope that the concept of the overfitting puzzle is understood and that you appreciate the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>. The artificial setup used in the study is a smart way to approach this topic and allows for intuitive interpretation of the results. The authors found that CNNs tend to "generalize" by actually learning the concept of an identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g. sequence data like speech) and compare whether the stated theorems also hold in those cases.
 
-Having read this blog post, we hope the concept of the overfitting puzzle is understood and helps to recognize the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>. The setup alone is a smart way to approach this topic and allows intuitive interpretation. The authors find that CNNs tend to “generalize” in terms of actually learning the concept of an identity, whereas FCNs are prone to memorization. Within these networks it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyse the inductive bias for other data types (e.g. sequence data like speech) and compare if the stated theorems also hold for those cases.
-
-In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that helped the machine learning community to get a deeper understanding of the inductive bias. From their results concrete guidance for practitioners can be derived that can help design models for new tasks.
+In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that have helped the machine learning community to gain a deeper understanding of inductive bias. Their results provide concrete guidance for practitioners that can help in designing models for new tasks.
