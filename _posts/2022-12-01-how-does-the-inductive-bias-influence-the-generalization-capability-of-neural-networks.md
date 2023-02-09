@@ -41,8 +41,7 @@ toc:
   - name: Conclusion
 ---
 
-
-Deep neural networks are a commonly used machine learning technique that have proven to be effective for many different use cases. However, their ability to generalize from training data is not well understood. In this blog post, we will explore the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, which aims to shed light on the question of why neural networks are able to generalize, and how inductive biases influence their generalization capabilities.
+Deep neural networks are a commonly used machine learning technique that has proven to be effective for many different use cases. However, their ability to generalize from training data is not well understood. In this blog post, we will explore the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, which aims to shed light on the question of why neural networks are able to generalize, and how inductive biases influence their generalization capabilities.
 
 
 ## Overfitting Puzzle
@@ -51,7 +50,7 @@ One open question in the field of machine learning is the **overfitting puzzle**
 
 Neural networks, particularly deep networks, are typically used in the overparameterized regime, where the number of parameters exceeds the number of training examples. In this case, common generalization bounds do not apply <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. According to classical learning theory, the generalization behavior of a learning system should depend on the number of training examples (n), and the complexity of the model should be balanced with its fit to the data <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. However, neural networks have shown that this is not always the case, as they can perform well even in cases of extreme overparameterization (e.g., a 5-layer CNN with 80 million parameters <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>).
 
-To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> examined the role of inductive bias in neural networks. Inductive bias, or learning bias, refers to the assumptions a network makes about the nature of the target function, and is determined by the network's architecture. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted experiments with different types of fully connected networks (FCN) and convolutional neural networks (CNN) to investigate which biases are effective for these network architectures.
+To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> examined the role of inductive bias in neural networks. Inductive bias, or learning bias, refers to the assumptions a network makes about the nature of the target function and is determined by the network's architecture. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted experiments with different types of fully connected networks (FCN) and convolutional neural networks (CNN) to investigate which biases are effective for these network architectures.
 
 
 
@@ -107,7 +106,7 @@ Deeper networks tend to learn the constant function, resulting in a strong induc
 
 {% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
 
-Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that more complex network architectures are more prone to memorization. This finding aligns with statistical learning theory, as a more complex architecture has more parameters and therefore, more overparameterization.
+Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that more complex network architectures are more prone to memorization. This finding aligns with statistical learning theory, as a more complex architecture has more parameters and, therefore, more overparameterization.
 
 
 
@@ -153,7 +152,6 @@ A better understanding of the evolution of the output can be obtained by examini
 
   <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"></iframe>
 </div>
-onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' 
 
 
 Random convolution gradually smooths out the input data, and after around eight layers, the shapes are lost. When the networks are trained, the results differ. The 7-layer CNN performs well and ends up with an identity function of the input images, while the results of the 14-layer CNN are more blurry. For the 20-layer trained CNN, it initially behaves similarly to the randomly initialized CNN by wiping out the input data, but it preserves the shapes for a longer period. In the last three layers, it renders the constant function of the training data and outputs 7 for any input.
@@ -185,6 +183,6 @@ For example, when equally overparameterized,
 
 
 ## Conclusion
-After reading this blog post, we hope that the concept of the overfitting puzzle is understood and that you appreciate the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>. The artificial setup used in the study is a smart way to approach this topic and allows for intuitive interpretation of the results. The authors found that CNNs tend to "generalize" by actually learning the concept of an identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g. sequence data like speech) and compare whether the stated theorems also hold in those cases.
+After reading this blog post, we hope that the concept of the overfitting puzzle is understood and that you appreciate the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>. The artificial setup used in the study is a smart way to approach this topic and allows for an intuitive interpretation of the results. The authors found that CNNs tend to "generalize" by actually learning the concept of identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g., sequence data like speech) and compare whether the stated theorems also hold in those cases.
 
-In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that have helped the machine learning community to gain a deeper understanding of inductive bias. Their results provide concrete guidance for practitioners that can help in designing models for new tasks.
+In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that have helped the machine learning community to gain a deeper understanding of inductive bias. Their results provide concrete guidance for practitioners that can help design models for new tasks.
