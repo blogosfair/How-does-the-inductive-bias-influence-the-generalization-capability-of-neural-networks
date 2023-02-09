@@ -122,7 +122,7 @@ If you choose the button 'CNN' in the first figure, it shows the resulting visua
 
 A better understanding of the evolution of the output can be obtained by examining the status of the prediction in the hidden layers of the CNN. Since CNNs, unlike FCNs, preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. The figure below shows the results for a randomly initialized 20-layer CNN compared to different depths of trained CNNs."
 
-% include figure.html path="assetsassets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayer.html"%}
+{ % include figure.html path="assetsassets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayer.html"%}
 
 
 <div class="l-page">
