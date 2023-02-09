@@ -78,7 +78,7 @@ So let us look at some of the results:
 
 
 <div class="l-page">
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"></iframe>
+  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="806px"></iframe>
 </div>
 
 
@@ -122,30 +122,10 @@ If you choose the button 'CNN' in the first figure, it shows the resulting visua
 
 A better understanding of the evolution of the output can be obtained by examining the status of the prediction in the hidden layers of the CNN. Since CNNs, unlike FCNs, preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. The figure below shows the results for a randomly initialized 20-layer CNN compared to different depths of trained CNNs."
 
-{ % include figure.html path="assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayer.html"%}
-
 
 <div class="l-page">
-    
-    
-    <script type="application/javascript">
 
-    function resizeIFrameToFitContent( iFrame ) {
-
-        iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
-        iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
-    }
-
-    window.addEventListener('DOMContentLoaded', function(e) {
-
-        var iFrame = document.getElementById( 'layers' );
-        resizeIFrameToFitContent( iFrame );
-
-    } );
-
-    </script>
-
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" id="layers"></iframe>
+  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="900px"></iframe>
 </div>
 
 
