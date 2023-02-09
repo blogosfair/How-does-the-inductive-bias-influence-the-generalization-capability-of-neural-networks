@@ -127,9 +127,9 @@ A better understanding of the evolution of the output can be obtained by examini
 
 
 <div class="l-page">
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"></iframe>
+  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' style="height:200px;width:100%;border:none;overflow:hidden;"></iframe>
 </div>
-
+onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' 
 
 
 Random convolution gradually smooths out the input data, and after around eight layers, the shapes are lost. When the networks are trained, the results differ. The 7-layer CNN performs well and ends up with an identity function of the input images, while the results of the 14-layer CNN are more blurry. For the 20-layer trained CNN, it initially behaves similarly to the randomly initialized CNN by wiping out the input data, but it preserves the shapes for a longer period. In the last three layers, it renders the constant function of the training data and outputs 7 for any input.
