@@ -145,7 +145,7 @@ The figures below show that CNNs have better generalization capability than FCNs
 
 <div class="l-page">
 
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/plot.html' | relative_url }}" frameborder='0' scrolling='no' width="80%" height="100%"></iframe>
+  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/plot.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="450px"></iframe>
 </div>
 
 
