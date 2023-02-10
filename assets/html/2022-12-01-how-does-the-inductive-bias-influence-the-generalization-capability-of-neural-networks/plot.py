@@ -6,7 +6,7 @@ fig = go.Figure()
 fig.update_layout(
     height=450,
     autosize=True,
-    margin=dict(t=0, b=0, l=100, r=100),
+    margin=dict(t=0, b=0, l=0, r=0),
     #tickfont=dict(size=35, family = "Balto"),
     template="seaborn",
 )
