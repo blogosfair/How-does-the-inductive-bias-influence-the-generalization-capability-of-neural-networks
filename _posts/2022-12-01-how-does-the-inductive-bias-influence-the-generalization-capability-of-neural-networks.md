@@ -71,6 +71,8 @@ The task used in the study is to learn an identity map through a single data poi
 
 To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) activation function, it is necessary to encode and recover negative values, as they are discarded by the ReLU function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
 
+All networks are trained using standard gradient descent to minimize the mean squared error.
+
 The study uses the **[MNIST dataset](https://paperswithcode.com/dataset/mnist)** and tests the networks on various types of data, including a linear combination of two digits, random digits from the MNIST test set, random images from the Fashion MNIST dataset, and algorithmically generated image patterns. 
 
 
@@ -81,20 +83,20 @@ So let us look at some of the results:
   <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="450px"></iframe>
 </div>
 
+The first coloumn of the figure above shows the single data point that was used to train the network on, and all following coloumns show the test data with its specific results. The rows represent the different implementations of the respective networks (FCN, CNN).
 
 
 ### Fully connected networks (FCN)
 
 
-The figure above shows that for fully connected networks, the outputs differ depending on the depth of the network and the type of testing data. 
-Shallower networks seem to incorporate random white noise into the output, while deeper networks tend to learn the constant function. The similarity of the test data to the training example also affects the behavior of the model. When the test data is from the MNIST digit sets, all network architectures perform quite well. However, for test data that is more dissimilar to the training data, the output tends to include more random white noise. The authors prove this finding with a *theorem* for 1-layer FCNs, 
-
+For fully connected networks, the outputs differ depending on the depth of the network and the type of testing data.
+Shallower networks seem to incorporate random white noise into the output, while deeper networks tend to learn the constant function. The similarity of the test data to the training example also affects the behavior of the model. When the test data is from the MNIST digit sets, all network architectures perform quite well. However, for test data that is more dissimilar to the training data, the output tends to include more random white noise. The authors prove this finding with a *theorem* for 1-layer FCNs. The formula shows the predicition results for a test data point $x$:
 
 $$
-    f(x) = \Pi(x) + R \Pi(x),
+    f(x) = \Pi_{\parallel}(x) + R \Pi_{\perp}(x)
 $$
 
-which decomposes the test data point $x$ into components that are parallel and perpendicular to the training example. This theorem shows that the output becomes more random as the test data becomes less similar to the training data.
+The test data point is decomposed into components that are parallel $\Pi_{\parallel}$ and perpendicular $\Pi_{\perp}$ to the training example. $R$ is a random matrix, independent of the training data. If the test data is highly correlated to the training data, the prediction resembles the training output. If the test data is dissimilar to the training data, $\Pi_{\perp}(x)$ dominates $\Pi_{\parallel}(x)$, the output is randomly projected by $R$ and persists of white noise.
 
 This behavior can be confirmed by visualizing the results of the 1-layer FCN:
 
