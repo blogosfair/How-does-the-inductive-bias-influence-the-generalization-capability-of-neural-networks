@@ -10,7 +10,7 @@ htmlwidgets: true
 #  - name: Anonymous 
 
 # do not fill this in until your post is accepted and you're publishing your camera-ready post!
-# authors:
+authors:
    - name: Charlotte Barth
      url: "https://www.linkedin.com/in/charlotte-barth-a58b0a152/?originalSubdomain=de"
      affiliations:
