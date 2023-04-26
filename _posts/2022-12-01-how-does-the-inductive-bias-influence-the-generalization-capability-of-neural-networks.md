@@ -45,9 +45,9 @@ Deep neural networks are a commonly used machine learning technique that has pro
 
 ## Overfitting Puzzle
 
-One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts **classical learning theory**, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data. This is based on the [**bias-variance tradeoff**](https://machinelearningcompass.com/model_optimization/bias_and_variance/) which is commonly illustrated in this way <d-cite key="BiasVariance"></d-cite>:
+One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts **classical learning theory**, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data. This is based on the [**bias-variance tradeoff**](https://machinelearningcompass.com/model_optimization/bias_and_variance/) which is commonly illustrated in this way <d-cite key="fortmann2012understanding"></d-cite>:
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_error.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_tradeoff.png" class="img-fluid" %}
 
 The tradeoff consists of finding the optimal model complexity between two extremes: If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in good performance on the training data but poor performance on the test data.
 
