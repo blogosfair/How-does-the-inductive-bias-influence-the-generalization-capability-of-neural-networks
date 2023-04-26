@@ -35,8 +35,7 @@ toc:
   - name: Experiments
     subsections:
     - name: Fully connected networks (FCN)
-    - name: Convolutional neural networks (CNNs)
-    - name: Fully connected networks (FCN)
+    - name: Convolutional neural networks (CNN)
   - name: General findings
   - name: Conclusion
 ---
@@ -46,13 +45,17 @@ Deep neural networks are a commonly used machine learning technique that has pro
 
 ## Overfitting Puzzle
 
-One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts **classical learning theory**, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data. This is based on the **bias-variance tradeoff** If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in good performance on the training data but poor performance on the test data.
+One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts **classical learning theory**, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data. This is based on the [**bias-variance tradeoff**](https://machinelearningcompass.com/model_optimization/bias_and_variance/) which is commonly illustrated in this way <d-cite key="BiasVariance"></d-cite>:
+
+{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_error.png" class="img-fluid" %}
+
+The tradeoff consists of finding the optimal model complexity between two extremes: If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in good performance on the training data but poor performance on the test data.
 
 Therefore, it is important to carefully balance the number of parameters and the amount of data available to achieve the best possible generalization performance for a given learning task.
 
-Neural networks, particularly deep networks, are typically used in the overparameterized regime, where the number of parameters exceeds the number of training examples. In this case, common generalization bounds do not apply <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. According to classical learning theory, the generalization behavior of a learning system should depend on the number of training examples (n), and the complexity of the model should be balanced with its fit to the data <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. However, neural networks have shown that this is not always the case, as they can perform well even in cases of extreme overparameterization (e.g., a 5-layer CNN with 80 million parameters <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>).
+Neural networks, particularly deep networks, are typically used in the overparameterized regime, where the number of parameters exceeds the number of training examples. In these cases, common generalization bounds do not apply <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. According to classical learning theory, the generalization behavior of a learning system should depend on the number of training examples (n), and the complexity of the model should be balanced with its fit to the data <d-cite key="DBLP:journals/corr/abs-1801-00173"></d-cite>. Otherwise, the algorithm would overfit. However, neural networks have shown that this is not always the case, as they can perform well even in cases of extreme overparameterization (e.g., a 5-layer CNN with 80 million parameters <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>). This is a very interesting finding as it shows that the classical learning theory may not hold true for neural networks.
 
-To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> examined the role of **inductive bias** in neural networks. Inductive bias, or learning bias, refers to the assumptions a network makes about the nature of the target function and is determined by the network's architecture. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted experiments with different types of fully connected networks (FCN) and convolutional neural networks (CNN) to investigate which biases are effective for these network architectures.
+To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> examined the role of **inductive bias** in neural networks and its influence on the generalization capability of these networks. Inductive bias, or learning bias, refers to the assumptions a network makes about the nature of the target function and is determined by the network's architecture. Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted experiments with different types of fully connected networks (FCN) and convolutional neural networks (CNN) to investigate which biases are effective for these network architectures.
 
 
 
@@ -115,7 +118,7 @@ Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude 
 
 
 
-### Convolutional neural networks (CNNs)
+### Convolutional neural networks (CNN)
 
 
 
@@ -161,11 +164,11 @@ The experiments described above lead to the following main findings of the paper
 
 For example, when equally overparameterized,
 
-* training a very deep model without residual connections is prone to memorization, while
+* training a very deep model is prone to memorization, while
 * adding more feature channels/dimensions is much less likely to cause overfitting.
 
 
 ## Conclusion
-After reading this blog post, we hope that the concept of the overfitting puzzle is understood and that you appreciate the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>. The artificial setup used in the study is a smart way to approach this topic and allows for an intuitive interpretation of the results. The authors found that CNNs tend to "generalize" by actually learning the concept of identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g., sequence data like speech) and compare whether the stated theorems also hold in those cases.
+After reading this blog post, we hope that the concept of the overfitting puzzle is understood and how the generalization capability of neural networks constrast classical learning theory. We also made the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> clear, as they provide more insights into the inductive bias. The artificial setup used in the study is a smart way to approach this topic and allows for an intuitive interpretation of the results. The authors found that CNNs tend to *generalize* by actually learning the concept of identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g., sequence data like speech) and compare whether the stated theorems also hold in those cases.
 
 In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that have helped the machine learning community to gain a deeper understanding of inductive bias. Their results provide concrete guidance for practitioners that can help design models for new tasks.
