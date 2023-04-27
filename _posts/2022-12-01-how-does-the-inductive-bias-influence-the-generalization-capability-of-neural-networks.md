@@ -49,7 +49,7 @@ One open question in the field of machine learning is the **overfitting puzzle**
 
 {% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_tradeoff.png" class="img-fluid" %}
 
-The tradeoff consists of finding the optimal model complexity between two extremes: If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in good performance on the training data but poor performance on the test data.
+The tradeoff consists of finding the optimal model complexity between two extremes: If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in a good performance on the training data but a poor performance on the test data.
 
 Therefore, it is important to carefully balance the number of parameters and the amount of data available to achieve the best possible generalization performance for a given learning task.
 
@@ -60,21 +60,13 @@ To better understand this phenomenon, Zhang et al. [2020] <d-cite key="DBLP:conf
 
 
 ## Experiments
-<!--- 
-paar Ergebnisse vorstellen (z.B. Figure 2,3; Was sehen wir? Graphiken, GIF?, wechsle sieht)
-Erklärung, warum wenige Layer besser funktionieren als viele
-2 Theoreme erklären? nicht zu speziell
 
-Vllt noch Figure 4 erklären
-
-Bilder reduzieren auf Wichtiges!
---->
 
 In the paper "Identity Crisis: Memorization and Generalization under Extreme Overparameterization" by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite>, the authors use **empirical studies** to better understand the *overfitting puzzle* and how inductive bias affects the behavior of overparameterized neural networks. The authors specifically aim to investigate the role of inductive bias under **different architectural choices** by comparing fully connected and convolutional neural networks.
 
 The task used in the study is to learn an identity map through a single data point, which is an artificial setup that demonstrates the most extreme case of overparameterization. The goal of the study is to determine whether a network tends towards memorization (learning a constant function) or generalization (learning the identity function).
 
-To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) activation function, it is necessary to encode and recover negative values, as they are discarded by the ReLU function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
+To enable the **identity task** <d-cite key="DBLP:conf/eccv/HeZRS16"></d-cite> for linear models, the authors ensure that hidden dimensions are not smaller than the input and set the weights to the identity matrix in every layer. For convolutional layers, only the center of the kernel is used, and all other values are set to zero, simulating a 1 x 1 convolution which acts as a local identity function. For deeper models that use the [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) activation function, it is necessary to encode and recover negative values, as they are discarded by the ReLU function. This can be achieved by using hidden dimensions that are twice the size of the input and storing negative and positive values separately.
 
 All networks are trained using standard gradient descent to minimize the mean squared error.
 
@@ -88,14 +80,14 @@ So let us look at some of the results:
   <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="450px"></iframe>
 </div>
 
-The first coloumn of the figure above shows the single data point that was used to train the network on, and all following coloumns show the test data with its specific results. The rows represent the different implementations of the respective networks (FCN, CNN).
+The first column of the figure above shows the single data point that was used to train the network on, and all following columns show the test data with its specific results. The rows represent the different implementations of the respective networks (FCN, CNN).
 
 
 ### Fully connected networks (FCN)
 
 
 For fully connected networks, the outputs differ depending on the depth of the network and the type of testing data.
-Shallower networks seem to incorporate random white noise into the output, while deeper networks tend to learn the constant function. The similarity of the test data to the training example also affects the behavior of the model. When the test data is from the MNIST digit sets, all network architectures perform quite well. However, for test data that is more dissimilar to the training data, the output tends to include more random white noise. The authors prove this finding with a *theorem* for 1-layer FCNs. The formula shows the predicition results for a test data point $x$:
+Shallower networks seem to incorporate random white noise into the output, while deeper networks tend to learn the constant function. The similarity of the test data to the training example also affects the behavior of the model. When the test data is from the MNIST digit sets, all network architectures perform quite well. However, for test data that is more dissimilar to the training data, the output tends to include more random white noise. The authors prove this finding with a *theorem* for 1-layer FCNs. The formula shows the prediction results for a test data point $x$:
 
 $$
     f(x) = \Pi_{\parallel}(x) + R \Pi_{\perp}(x)
@@ -125,7 +117,7 @@ Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude 
 
 For convolutional neural networks, the inductive bias was analyzed using the ReLU activation function and testing networks with different depths. The hidden layers of the CNN consist of 5 × 5 convolution filters organized into 128 channels. The networks have two constraints to match the structure of the identity target function.
 
-If you choose the button 'CNN' in the first figure, it shows the resulting visualizations. It can be seen that shallow networks are able to learn the identity function, while intermediate-depth networks function as edge detectors and deep networks learn the constant function. Whether the model learns the identity or the constant function, both outcomes reflect inductive biases since no specific structure was given by the task.
+If you choose the button 'CNN' in the first figure, it shows the resulting visualizations. It can be seen that shallow networks are able to learn the identity function, while intermediate-depth networks function as edge detectors, and deep networks learn the constant function. Whether the model learns the identity or the constant function, both outcomes reflect inductive biases since no specific structure was given by the task.
 
 A better understanding of the evolution of the output can be obtained by examining the status of the prediction in the hidden layers of the CNN. Since CNNs, unlike FCNs, preserve the spatial relations between neurons in the intermediate layers, these layers can be visualized. The figure below shows the results for a randomly initialized 20-layer CNN compared to different depths of trained CNNs."
 
@@ -169,6 +161,6 @@ For example, when equally overparameterized,
 
 
 ## Conclusion
-After reading this blog post, we hope that the concept of the overfitting puzzle is understood and how the generalization capability of neural networks constrast classical learning theory. We also made the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> clear, as they provide more insights into the inductive bias. The artificial setup used in the study is a smart way to approach this topic and allows for an intuitive interpretation of the results. The authors found that CNNs tend to *generalize* by actually learning the concept of identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g., sequence data like speech) and compare whether the stated theorems also hold in those cases.
+After reading this blog post, we hope that the concept of the overfitting puzzle is understood and it is revealed how the generalization capability of neural networks contrasts with classical learning theory. We also made the significance of the study conducted by Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> clear, as they provide more insights into the inductive bias. The artificial setup used in the study is a smart way to approach this topic and allows for an intuitive interpretation of the results. The authors found that CNNs tend to *generalize* by actually learning the concept of identity, while FCNs are prone to memorization. Within these networks, it can be said that the simpler the network architecture is, the better the task results. Another observation is that deep CNNs exhibit extreme memorization. It would have been interesting to analyze the inductive bias for other types of data (e.g., sequence data like speech) and compare whether the stated theorems also hold in those cases.
 
 In summary, Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conducted interesting studies that have helped the machine learning community to gain a deeper understanding of inductive bias. Their results provide concrete guidance for practitioners that can help design models for new tasks.
