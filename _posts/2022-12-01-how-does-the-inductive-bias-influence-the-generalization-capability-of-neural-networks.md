@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: How does the inductive bias influence the generalization capability of neural networks?
-description: The blog post discusses how memorization and generalization are affected by extreme overparameterization.
+description: The blog post discusses how memorization and generalization are affected by extreme overparameterization. Therefore, it explains the *overfitting puzzle* in machine learning and how the *inductive bias* can help to understand the generalization capability of neural networks.
 date: 2022-12-01
 htmlwidgets: true
 
